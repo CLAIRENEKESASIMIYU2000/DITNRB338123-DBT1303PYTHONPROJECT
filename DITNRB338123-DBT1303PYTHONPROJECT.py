@@ -2,7 +2,15 @@ import datetime
 
 class Vehicle:
     def __init__(self, vehicle_number, vehicle_type, vehicle_name, owner_name):
-        # Initialize the Vehicle object with provided details
+        """
+        Initialize a Vehicle object with provided details.
+
+        Parameters:
+            vehicle_number (str): The vehicle number plate.
+            vehicle_type (str): The type of the vehicle (Car, Motorcycle, Bicycle, etc.).
+            vehicle_name (str): The name of the vehicle.
+            owner_name (str): The name of the vehicle owner.
+        """
         self.vehicle_number = vehicle_number
         self.vehicle_type = vehicle_type
         self.vehicle_name = vehicle_name
@@ -14,12 +22,16 @@ class Vehicle:
         self.payment_status = False
 
     def park(self):
-        # Park the vehicle and record the entry time
+        """
+        Park the vehicle and record the entry time.
+        """
         self.entry_time = datetime.datetime.now()
         print(f"Vehicle {self.vehicle_number} parked at {self.entry_time}")
 
     def unpark(self):
-        # Unpark the vehicle and record the exit time
+        """
+        Unpark the vehicle and record the exit time. Calculate parking charge and update payment status.
+        """
         self.exit_time = datetime.datetime.now()
         self.parking_duration = self.exit_time - self.entry_time
         self.calculate_parking_charge()
@@ -27,9 +39,11 @@ class Vehicle:
         print(f"Parking duration: {self.parking_duration}")
         print(f"Parking charge: {self.parking_charge} KSH")
         self.payment_status = True
-        
+
     def calculate_parking_charge(self):
-        # Calculate the parking charge based on the parking duration and vehicle type
+        """
+        Calculate the parking charge based on the parking duration and vehicle type.
+        """
         minutes_parked = self.parking_duration.total_seconds() / 60
         if self.vehicle_type == 'Car':
             self.parking_charge = minutes_parked * 10
@@ -39,7 +53,10 @@ class Vehicle:
             self.parking_charge = minutes_parked * 3
 
     def display_details(self):
-        # Display the vehicle details including entry time, exit time, parking duration, parking charge, and payment status
+        """
+        Display the details of the vehicle including entry time, exit time, parking duration,
+        parking charge, and payment status.
+        """
         print(f"Vehicle Number: {self.vehicle_number}")
         print(f"Vehicle Type: {self.vehicle_type}")
         print(f"Vehicle Name: {self.vehicle_name}")
@@ -54,16 +71,27 @@ class Vehicle:
             print(f"Parking Charge: {self.parking_charge} KSH")
         print(f"Payment Status: {'Paid' if self.payment_status else 'Pending'}")
 
+
 class ParkingLot:
     def __init__(self, capacity):
-        # Initialize the ParkingLot object with the given capacity
+        """
+        Initialize the ParkingLot object with the given capacity.
+
+        Parameters:
+            capacity (int): The total number of parking spaces in the parking lot.
+        """
         self.capacity = capacity
         self.available_spaces = capacity
         self.occupied_spaces = 0
         self.vehicles = {}
 
     def park_vehicle(self, vehicle):
-        # Park the vehicle in the parking lot if space is available
+        """
+        Park the vehicle in the parking lot if space is available.
+
+        Parameters:
+            vehicle (Vehicle): The Vehicle object to be parked.
+        """
         if self.available_spaces > 0:
             self.vehicles[vehicle.vehicle_number] = vehicle
             vehicle.park()
@@ -73,7 +101,12 @@ class ParkingLot:
             print("Parking lot is full. Cannot park vehicle.")
 
     def unpark_vehicle(self, vehicle_number):
-        # Unpark the vehicle from the parking lot
+        """
+        Unpark the vehicle from the parking lot.
+
+        Parameters:
+            vehicle_number (str): The vehicle number plate of the vehicle to be unparked.
+        """
         if vehicle_number in self.vehicles:
             vehicle = self.vehicles[vehicle_number]
             del self.vehicles[vehicle_number]
@@ -84,7 +117,12 @@ class ParkingLot:
             print("Vehicle not found in the parking lot.")
 
     def search_vehicle(self, vehicle_number):
-        # Search for a vehicle in the parking lot and display its details if found
+        """
+        Search for a vehicle in the parking lot and display its details if found.
+
+        Parameters:
+            vehicle_number (str): The vehicle number plate of the vehicle to search for.
+        """
         if vehicle_number in self.vehicles:
             vehicle = self.vehicles[vehicle_number]
             print("Vehicle found in the parking lot.")
@@ -93,7 +131,9 @@ class ParkingLot:
             print("Vehicle not found in the parking lot.")
 
     def display_parked_vehicles(self):
-        # Display the details of all parked vehicles in the parking lot
+        """
+        Display the details of all parked vehicles in the parking lot.
+        """
         if not self.vehicles:
             print("No vehicles parked in the parking lot.")
         else:
@@ -104,11 +144,15 @@ class ParkingLot:
                 print("---------------------")
 
     def display_parking_lot_status(self):
-        # Display the current status of the parking lot including total spaces, occupied spaces, and available spaces
+        """
+        Display the current status of the parking lot including total spaces, occupied spaces,
+        and available spaces.
+        """
         print("Parking Lot Status:")
         print(f"Total Spaces: {self.capacity}")
         print(f"Occupied Spaces: {self.occupied_spaces}")
         print(f"Available Spaces: {self.available_spaces}")
+
 
 def main():
     parking_lot = ParkingLot(50)
